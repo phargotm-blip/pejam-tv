@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PEJAM TV — Nouvèl Ayiti</title>
+  <meta name="application-name" content="PEJAM TV"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="PEJAM TV"/>
+  <meta name="theme-color" content="#f97316"/>
+  <meta name="description" content="Premye platfòm nouvèl Ayisyen ou ka fè konfyans. Aktyalite 24/7."/>
+  <link rel="apple-touch-icon" href="https://api.dicebear.com/7.x/initials/svg?seed=PT&backgroundColor=f97316&textColor=ffffff&fontSize=40&chars=2"/>
+  <link rel="manifest" id="pwa-manifest"/>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --red:#f97316; --red-dark:#c2410c; --black:#f8f8f8;
+      --dark:#ffffff; --card:#f1f1f1; --border:#ddd;
+      --white:#1a1a1a; --gray:#555; --gold:#ea580c;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:var(--black);color:var(--white);font-family:'Source Serif 4',serif;overflow-x:hidden;}
+
+    .ticker{background:var(--red);padding:0.4rem 0;overflow:hidden;white-space:nowrap;}
+    .ticker-inner{display:inline-block;animation:ticker 35s linear infinite;font-family:'Oswald',sans-serif;font-size:0.8rem;letter-spacing:0.05em;text-transform:uppercase;color:#fff;}
+    .ticker-inner span{margin:0 3rem;}
+    .ticker-inner span::before{content:'● ';}
+    @keyframes ticker{from{transform:translateX(100vw)}to{transform:translateX(-100%)}}
+
+    nav{background:var(--dark);border-bottom:3px solid var(--red);position:sticky;top:0;z-index:100;padding:0 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto;height:60px;}
+    .nav-logo{font-family:'Oswald',sans-serif;font-size:1.8rem;font-weight:700;display:flex;align-items:center;gap:0.3rem;}
+    .nav-logo .tv{color:var(--red);}
+    .nav-links{display:flex;list-style:none;}
+    .nav-links a{color:var(--gray);text-decoration:none;font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;padding:0 1rem;height:60px;display:flex;align-items:center;border-bottom:3px solid transparent;margin-bottom:-3px;transition:all 0.2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--white);border-bottom-color:var(--red);}
+    .nav-right{display:flex;align-items:center;gap:0.8rem;}
+    .nav-live{display:flex;align-items:center;gap:0.4rem;background:var(--red);color:#fff;font-family:'Oswald',sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.8rem;cursor:pointer;animation:pulse-red 2s infinite;}
+    .nav-live::before{content:'●';font-size:0.6rem;}
+    @keyframes pulse-red{0%,100%{opacity:1}50%{opacity:0.8}}
+    .nav-admin-btn{background:none;border:1px solid var(--border);color:var(--gray);font-family:'Oswald',sans-serif;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.35rem 0.8rem;cursor:pointer;transition:all 0.2s;}
+    .nav-admin-btn:hover{border-color:var(--red);color:var(--white);}
+    .nav-admin-btn.logged{border-color:#16a34a;color:#16a34a;}
+
+    .hero{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;display:grid;grid-template-columns:2fr 1fr;gap:1.5rem;}
+    .hero-main{position:relative;overflow:hidden;background:linear-gradient(160deg,#fff3e0,#ffe0b2,#ffcc80);min-height:420px;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;cursor:pointer;}
+    .hero-main::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);}
+    .hero-img-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:6rem;opacity:0.2;}
+    .hero-tag{position:relative;z-index:1;background:var(--red);color:#fff;font-family:'Oswald',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.25rem 0.6rem;display:inline-block;margin-bottom:0.8rem;}
+    .hero-title{position:relative;z-index:1;font-family:'Oswald',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:600;line-height:1.2;color:#fff;margin-bottom:0.6rem;}
+    .hero-meta{position:relative;z-index:1;font-size:0.8rem;color:#ddd;font-style:italic;}
+    .hero-sidebar{display:flex;flex-direction:column;gap:1rem;}
+    .side-card{background:var(--card);border-left:3px solid var(--red);padding:1rem;cursor:pointer;transition:background 0.2s;flex:1;}
+    .side-card:hover{background:#e8e8e8;}
+    .side-tag{font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:0.4rem;}
+    .side-title{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:500;line-height:1.3;margin-bottom:0.4rem;}
+    .side-meta{font-size:0.75rem;color:var(--gray);font-style:italic;}
+
+    .section-header{max-width:1100px;margin:0 auto;padding:0 1.5rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem;}
+    .section-label{font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;}
+    .section-line{flex:1;height:1px;background:var(--border);}
+    .section-more{font-family:'Oswald',sans-serif;font-size:0.75rem;color:var(--red);text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;text-decoration:none;}
+
+    .news-grid{max-width:1100px;margin:0 auto;padding:0 1.5rem 2rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;}
+    .news-card{background:var(--card);cursor:pointer;transition:transform 0.2s;border-bottom:2px solid transparent;}
+    .news-card:hover{transform:translateY(-3px);border-bottom-color:var(--red);}
+    .news-card-img{height:160px;background:#fff3e0;display:flex;align-items:center;justify-content:center;font-size:3rem;}
+    .news-card-body{padding:1rem;}
+    .news-card-tag{font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:0.4rem;}
+    .news-card-title{font-family:'Oswald',sans-serif;font-size:1rem;font-weight:500;line-height:1.3;margin-bottom:0.6rem;}
+    .news-card-excerpt{font-size:0.82rem;color:var(--gray);line-height:1.6;margin-bottom:0.8rem;}
+    .news-card-meta{font-size:0.75rem;color:#999;font-style:italic;display:flex;justify-content:space-between;}
+
+    .premium-banner{max-width:1100px;margin:1rem auto 2rem;padding:0 1.5rem;}
+    .premium-inner{background:linear-gradient(135deg,#fff7ed,#ffedd5,#fff7ed);border:1px solid var(--red);padding:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+    .premium-text h3{font-family:'Oswald',sans-serif;font-size:1.4rem;color:var(--red);margin-bottom:0.3rem;}
+    .premium-text p{color:var(--gray);font-size:0.9rem;}
+    .premium-btn{background:var(--red);color:#fff;font-family:'Oswald',sans-serif;font-weight:600;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;border:none;padding:0.8rem 2rem;cursor:pointer;}
+
+    .ad-banner{max-width:1100px;margin:0 auto 2rem;padding:0 1.5rem;}
+    .ad-inner{background:var(--card);border:1px dashed var(--border);height:90px;display:flex;align-items:center;justify-content:center;color:var(--gray);font-family:'Oswald',sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;}
+
+    .video-grid{max-width:1100px;margin:0 auto;padding:0 1.5rem 2rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+    .video-card{cursor:pointer;}
+    .video-thumb{background:#fff3e0;height:120px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:0.6rem;}
+    .video-thumb::after{content:'▶';position:absolute;width:40px;height:40px;background:rgba(249,115,22,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;line-height:40px;text-align:center;padding-left:3px;color:#fff;}
+    .video-icon{font-size:2.5rem;opacity:0.4;}
+    .video-title{font-family:'Oswald',sans-serif;font-size:0.85rem;font-weight:500;line-height:1.3;}
+    .video-views{font-size:0.72rem;color:var(--gray);margin-top:0.2rem;}
+
+    .subscribe-section{background:#fff7ed;border-top:1px solid var(--border);padding:2rem 1.5rem;}
+    .subscribe-inner{max-width:500px;margin:0 auto;text-align:center;}
+    .subscribe-inner h3{font-family:'Oswald',sans-serif;font-size:1.3rem;margin-bottom:0.5rem;}
+    .subscribe-inner p{color:var(--gray);font-size:0.85rem;margin-bottom:1.2rem;}
+    .subscribe-form{display:flex;}
+    .subscribe-form input{flex:1;background:#fff;border:1px solid var(--border);border-right:none;color:var(--white);padding:0.8rem 1rem;font-family:'Source Serif 4',serif;font-size:0.9rem;outline:none;}
+    .subscribe-form button{background:var(--red);color:#fff;border:none;padding:0.8rem 1.5rem;font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;}
+
+    footer{background:#1a1a1a;border-top:3px solid var(--red);padding:3rem 1.5rem 2rem;}
+    .footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:2rem;}
+    .footer-logo{font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;margin-bottom:0.8rem;color:#fff;}
+    .footer-logo .tv{color:var(--red);}
+    .footer-desc{color:#888;font-size:0.85rem;line-height:1.7;}
+    .footer-title{font-family:'Oswald',sans-serif;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:1rem;}
+    .footer-links{list-style:none;}
+    .footer-links li{padding:0.3rem 0;border-bottom:1px solid #333;font-size:0.85rem;color:#888;cursor:pointer;}
+    .footer-links li:hover{color:#fff;}
+    .footer-bottom{max-width:1100px;margin:0 auto;border-top:1px solid #333;padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+    .footer-copy{font-size:0.78rem;color:#444;}
+    .social-links{display:flex;gap:0.8rem;}
+    .social-btn{width:34px;height:34px;background:#333;border:none;color:#888;font-size:0.9rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;}
+    .social-btn:hover{background:var(--red);color:#fff;}
+
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;align-items:center;justify-content:center;padding:1rem;}
+    .modal-overlay.open{display:flex;}
+    .modal{background:#fff;max-width:700px;width:100%;max-height:90vh;overflow-y:auto;border-top:4px solid var(--red);box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+    .modal-header{padding:1.5rem;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:start;}
+    .modal-tag{font-family:'Oswald',sans-serif;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:0.5rem;}
+    .modal-title{font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:600;line-height:1.2;color:#1a1a1a;}
+    .modal-close{background:none;border:none;color:#999;font-size:1.5rem;cursor:pointer;flex-shrink:0;margin-left:1rem;}
+    .modal-body{padding:1.5rem;}
+    .modal-meta{font-size:0.8rem;color:var(--gray);font-style:italic;margin-bottom:1.2rem;padding-bottom:1rem;border-bottom:1px solid #eee;}
+    .modal-content{font-size:0.95rem;line-height:1.8;color:#444;}
+
+    .form-field{margin-bottom:1rem;}
+    .form-field label{font-family:'Oswald',sans-serif;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);display:block;margin-bottom:0.4rem;}
+    .form-field input,.form-field select,.form-field textarea{width:100%;background:#f8f8f8;border:1px solid var(--border);color:#1a1a1a;padding:0.75rem;font-family:'Source Serif 4',serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+    .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--red);}
+    .form-field textarea{resize:vertical;}
+
+    .admin-badge{display:none;position:fixed;bottom:1.5rem;left:1.5rem;background:#1a1a1a;border:1px solid #16a34a;padding:0.5rem 1rem;font-family:'Oswald',sans-serif;font-size:0.75rem;color:#16a34a;letter-spacing:0.08em;z-index:150;align-items:center;gap:0.5rem;}
+    .admin-badge.show{display:flex;}
+    .admin-badge button{background:none;border:none;color:#888;cursor:pointer;font-size:0.8rem;margin-left:0.4rem;}
+    .add-article-btn{display:none;position:fixed;bottom:1.5rem;right:1.5rem;background:var(--red);color:#fff;border:none;padding:0.7rem 1.3rem;font-family:'Oswald',sans-serif;font-size:0.9rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;z-index:150;box-shadow:0 4px 20px rgba(249,115,22,0.4);}
+    .add-article-btn.show{display:block;}
+
+    .plan-card{background:#f8f8f8;border:2px solid var(--border);padding:0.8rem;text-align:center;cursor:pointer;transition:all 0.2s;}
+    .plan-card:hover{border-color:var(--red);}
+    .plan-card.selected{border-color:var(--red);background:#fff7ed;transform:scale(1.03);}
+
+    .access-box{background:#f0fdf4;border:2px solid #16a34a;padding:1.5rem;text-align:center;margin-top:1rem;}
+
+    @media(max-width:768px){
+      .hero{grid-template-columns:1fr;}
+      .news-grid{grid-template-columns:1fr;}
+      .video-grid{grid-template-columns:repeat(2,1fr);}
+      .footer-inner{grid-template-columns:1fr;gap:1.5rem;}
+      .nav-links{display:none;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>AYITI : Sitiyasyon sekirite nan Pòtoprens ap amelyore</span>
+    <span>EKONOMI : Goud la ap monte fas ak dola</span>
+    <span>ESPÒ : Seleksyon nasyonal Ayiti ap prepare pou match kap vini</span>
+    <span>DYASPORA : Nouvo règleman pou viza Ameriken</span>
+    <span>KILTIRÈL : Festival mizik Ayisyen ap fèt mwa pwochèn</span>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><span>PEJAM</span><span class="tv">TV</span> 📺</div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Akèy</a></li>
+      <li><a href="#">Ayiti</a></li>
+      <li><a href="#">Mondyal</a></li>
+      <li><a href="#">Biznis</a></li>
+      <li><a href="#">Espò</a></li>
+      <li><a href="#">Kiltirèl</a></li>
+      <li><a href="#" onclick="document.getElementById('video-modal').classList.add('open')">Videyo</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="nav-live">Live</div>
+      <button class="nav-admin-btn" id="nav-admin-btn" onclick="handleAdminBtn()">🔐 Admin</button>
+      <button class="nav-admin-btn" onclick="openAccessModal()" style="border-color:var(--red);color:var(--red);">⭐ Aksè Premium</button>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-main" onclick="openArticle(0)">
+    <div class="hero-img-placeholder">🇭🇹</div>
+    <span class="hero-tag">Ayiti — Aktyalite</span>
+    <h2 class="hero-title">Gouvènman an anonse yon nouvo plan pou rekonstriksyon kominote ki afekte yo nan sid peyi a</h2>
+    <div class="hero-meta">Par Rédaction PEJAM TV · 20 Avril 2026 · 5 min li</div>
+  </div>
+  <div class="hero-sidebar">
+    <div class="side-card" onclick="openArticle(1)">
+      <div class="side-tag">Ekonomi</div>
+      <div class="side-title">Taux de change : Goud la rive nan 132 pou 1 dola ameriken</div>
+      <div class="side-meta">2 èdtan de sa</div>
+    </div>
+    <div class="side-card" onclick="openArticle(2)">
+      <div class="side-tag">Dyaspora</div>
+      <div class="side-title">Miami : Gwo rasanbleman kominote Ayisyen pou soutni peyi a</div>
+      <div class="side-meta">4 èdtan de sa</div>
+    </div>
+    <div class="side-card" onclick="openArticle(3)">
+      <div class="side-tag">Espò</div>
+      <div class="side-title">Seleksyon nasyonal : Coaches yo anonse ekip pou match prochain</div>
+      <div class="side-meta">6 èdtan de sa</div>
+    </div>
+  </div>
+</div>
+
+<div class="ad-banner"><div class="ad-inner" style="cursor:pointer;" onclick="document.getElementById('pub-modal').classList.add('open')">📢 Espas Piblisite — Klike pou anonse biznis ou sou PEJAM TV · Depi 1,000g/semèn</div></div>
+
+<div class="section-header">
+  <span class="section-label">🔴 Dènye Nouvèl</span>
+  <div class="section-line"></div>
+  <a class="section-more" href="#">Wè tout →</a>
+</div>
+
+<div class="news-grid" id="news-grid">
+  <!-- Atik debaz yo -->
+  <div class="news-card" onclick="openArticle(4)">
+    <div class="news-card-img">🏥</div>
+    <div class="news-card-body">
+      <div class="news-card-tag">Sante</div>
+      <div class="news-card-title">Nouvo lopital ap ouvri nan Atibon — 200 kabann disponib pou malad</div>
+      <div class="news-card-excerpt">Ministè Sante Piblik la anonse ouverture yon nouvo lopital modèn nan vil Atibon-Jacmel...</div>
+      <div class="news-card-meta"><span>Sante</span><span>1 tan de sa</span></div>
+    </div>
+  </div>
+  <div class="news-card" onclick="openArticle(5)">
+    <div class="news-card-img">⚡</div>
+    <div class="news-card-body">
+      <div class="news-card-tag">Enèji</div>
+      <div class="news-card-title">ED'H anonse nouvo orè kouran pou Pòtoprens semèn k ap vini an</div>
+      <div class="news-card-excerpt">Elektriste d'Haïti pibliye yon nouvo orè distribisyon kouran pou kapital la...</div>
+      <div class="news-card-meta"><span>Enèji</span><span>3 tan de sa</span></div>
+    </div>
+  </div>
+  <div class="news-card" onclick="openArticle(6)">
+    <div class="news-card-img">🎓</div>
+    <div class="news-card-body">
+      <div class="news-card-tag">Edikasyon</div>
+      <div class="news-card-title">Rezilta BAC 2026 : 68% elèv pase egzamen — yon rekò istorik</div>
+      <div class="news-card-excerpt">Ministè Edikasyon Nasyonal anonse rezilta egzamen baccalauréat 2026...</div>
+      <div class="news-card-meta"><span>Edikasyon</span><span>5 tan de sa</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="premium-banner">
+  <div class="premium-inner">
+    <div class="premium-text">
+      <h3>⭐ PEJAM TV Premium</h3>
+      <p>Jwenn aksè a tout atik yo, videyo eksklizyf, ak nouvèl san piblisite.</p>
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;">
+      <div style="text-align:center;">
+        <div style="font-family:'Oswald',sans-serif;font-size:0.7rem;color:var(--gray);text-transform:uppercase;">1 Mwa</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);">300 <span style="font-size:0.8rem;font-weight:400;">goud</span></div>
+      </div>
+      <div style="text-align:center;background:rgba(249,115,22,0.1);padding:0.4rem 0.8rem;border:1px solid var(--red);">
+        <div style="font-family:'Oswald',sans-serif;font-size:0.7rem;color:var(--red);text-transform:uppercase;">3 Mwa ⭐</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);">800 <span style="font-size:0.8rem;font-weight:400;">goud</span></div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:'Oswald',sans-serif;font-size:0.7rem;color:var(--gray);text-transform:uppercase;">1 An</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;color:var(--white);">2800 <span style="font-size:0.8rem;font-weight:400;">goud</span></div>
+      </div>
+      <button class="premium-btn" onclick="document.getElementById('payment-modal').classList.add('open')">Abòne →</button>
+    </div>
+  </div>
+</div>
+
+<div class="section-header">
+  <span class="section-label">🎬 Videyo & Rapò</span>
+  <div class="section-line"></div>
+  <a class="section-more" href="#">Wè tout →</a>
+</div>
+<div class="video-grid">
+  <div class="video-card"><div class="video-thumb"><div class="video-icon">🗣️</div></div><div class="video-title">Entèvyou: Minis Finans pale sou bidjè 2026</div><div class="video-views">12.4K vye · 2 jou de sa</div></div>
+  <div class="video-card"><div class="video-thumb"><div class="video-icon">🌊</div></div><div class="video-title">Repòtaj: Inondasyon nan Gonaïves</div><div class="video-views">8.7K vye · 3 jou de sa</div></div>
+  <div class="video-card"><div class="video-thumb"><div class="video-icon">⚽</div></div><div class="video-title">Espò: Rezime match Grenadiers yo</div><div class="video-views">25.1K vye · 1 semèn de sa</div></div>
+  <div class="video-card"><div class="video-thumb"><div class="video-icon">🎵</div></div><div class="video-title">Kiltirèl: BélO nan konsè Pétion-Ville</div><div class="video-views">18.3K vye · 4 jou de sa</div></div>
+</div>
+
+<div class="subscribe-section">
+  <div class="subscribe-inner">
+    <h3>📲 Resevwa Nouvèl Chak Jou</h3>
+    <p>Abòne sou WhatsApp pou resevwa nouvèl enpòtan yo dirèkteman chak maten.</p>
+    <button onclick="subscribeWhatsApp()" style="background:#25d366;color:#000;border:none;padding:0.9rem 2rem;font-family:'Oswald',sans-serif;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-weight:700;width:100%;max-width:350px;">📱 Abòne sou WhatsApp →</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">PEJAM <span class="tv">TV</span> 📺</div>
+      <p class="footer-desc">Premye platfòm nouvèl Ayisyen ou ka fè konfyans. Aktyalite, analiz, ak repòtaj pwofesyonèl 24/7.</p>
+    </div>
+    <div>
+      <div class="footer-title">Seksyon</div>
+      <ul class="footer-links"><li>Aktyalite Ayiti</li><li>Nouvèl Mondyal</li><li>Ekonomi & Biznis</li><li>Espò</li><li>Kiltirèl</li><li>Videyo</li></ul>
+    </div>
+    <div>
+      <div class="footer-title">Kontak</div>
+      <ul class="footer-links"><li>À Propos</li><li>Kontakte Nou</li><li>Piblisite</li><li>Premium</li><li>Kondisyon Itilizasyon</li></ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 PEJAM TV — Tout dwa rezève</div>
+    <div class="social-links">
+      <button class="social-btn">f</button><button class="social-btn">t</button>
+      <button class="social-btn">▶</button><button class="social-btn">📷</button>
+    </div>
+  </div>
+</footer>
+
+<!-- INSTALL BANNER -->
+<div id="install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;border-top:3px solid var(--red);padding:1rem 1.5rem;z-index:300;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+  <div style="display:flex;align-items:center;gap:0.8rem;">
+    <div style="width:44px;height:44px;background:var(--red);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;">📺</div>
+    <div>
+      <div style="font-family:'Oswald',sans-serif;font-size:0.95rem;color:#fff;font-weight:600;">Enstale PEJAM TV</div>
+      <div style="font-size:0.75rem;color:#888;">Ajoute sou ekran telefòn ou — gratis!</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:0.6rem;">
+    <button id="install-btn" style="background:var(--red);color:#fff;border:none;padding:0.6rem 1.2rem;font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;">📲 Enstale</button>
+    <button onclick="document.getElementById('install-banner').style.display='none'" style="background:none;border:1px solid #444;color:#888;padding:0.6rem 0.8rem;font-family:'Oswald',sans-serif;font-size:0.85rem;cursor:pointer;">Non mèsi</button>
+  </div>
+</div>
+
+<!-- VIDEO MODAL -->
+<div class="modal-overlay" id="video-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <div><div class="modal-tag" style="color:var(--red);">🎬 Videyo & Live</div><div class="modal-title">Watch PEJAM TV</div></div>
+      <button class="modal-close" onclick="document.getElementById('video-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:#fff0f0;border:2px solid var(--red);padding:1.2rem;margin-bottom:1.5rem;">
+        <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+          <div style="background:var(--red);color:#fff;font-family:'Oswald',sans-serif;font-size:0.75rem;padding:0.3rem 0.7rem;letter-spacing:0.1em;animation:pulse-red 1.5s infinite;">● LIVE</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1.1rem;font-weight:600;">Transmisyon Dirèk</div>
+        </div>
+        <div id="live-container" style="background:#111;width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.8rem;color:#555;">
+          <div style="font-size:3rem;">📡</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:0.9rem;letter-spacing:0.05em;">Pa gen transmisyon kounye a</div>
+          <div style="font-size:0.78rem;">Abòne sou YouTube & Facebook pou pa rate live yo</div>
+        </div>
+        <div style="display:flex;gap:0.8rem;margin-top:0.8rem;flex-wrap:wrap;">
+          <a href="https://youtube.com/@PEJAMtv" target="_blank" style="flex:1;background:#ff0000;color:#fff;text-decoration:none;padding:0.6rem;font-family:'Oswald',sans-serif;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.08em;text-align:center;display:block;">▶ YouTube →</a>
+          <a href="https://facebook.com/PEJAMtv" target="_blank" style="flex:1;background:#1877f2;color:#fff;text-decoration:none;padding:0.6rem;font-family:'Oswald',sans-serif;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.08em;text-align:center;display:block;">f Facebook →</a>
+        </div>
+      </div>
+      <div style="font-family:'Oswald',sans-serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);margin-bottom:0.8rem;">🎬 Dènye Videyo</div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;">
+        <div onclick="playVideo('')" style="cursor:pointer;background:#f8f8f8;border:1px solid var(--border);">
+          <div style="background:#111;height:100px;display:flex;align-items:center;justify-content:center;position:relative;"><span style="font-size:2rem;opacity:0.4;">🗣️</span><div style="position:absolute;width:34px;height:34px;background:rgba(249,115,22,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;padding-left:2px;">▶</div></div>
+          <div style="padding:0.6rem;font-family:'Oswald',sans-serif;font-size:0.82rem;line-height:1.3;">Entèvyou: Minis Finans pale sou bidjè 2026</div>
+          <div style="padding:0 0.6rem 0.6rem;font-size:0.72rem;color:var(--gray);">12.4K vye · 2 jou de sa</div>
+        </div>
+        <div onclick="playVideo('')" style="cursor:pointer;background:#f8f8f8;border:1px solid var(--border);">
+          <div style="background:#111;height:100px;display:flex;align-items:center;justify-content:center;position:relative;"><span style="font-size:2rem;opacity:0.4;">🌊</span><div style="position:absolute;width:34px;height:34px;background:rgba(249,115,22,0.9);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;padding-left:2px;">▶</div></div>
+          <div style="padding:0.6rem;font-family:'Oswald',sans-serif;font-size:0.82rem;line-height:1.3;">Repòtaj: Inondasyon nan Gonaïves</div>
+          <div style="padding:0 0.6rem 0.6rem;font-size:0.72rem;color:var(--gray);">8.7K vye · 3 jou de sa</div>
+        </div>
+      </div>
+      <div style="background:#f8f8f8;border:1px solid var(--border);padding:1rem;margin-top:1.2rem;text-align:center;">
+        <div style="font-family:'Oswald',sans-serif;font-size:0.9rem;margin-bottom:0.8rem;">🔔 Abòne pou pa rate anyen</div>
+        <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
+          <a href="https://youtube.com/@PEJAMtv" target="_blank" style="background:#ff0000;color:#fff;text-decoration:none;padding:0.6rem 1.2rem;font-family:'Oswald',sans-serif;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.08em;">▶ Abòne YouTube</a>
+          <a href="https://facebook.com/PEJAMtv" target="_blank" style="background:#1877f2;color:#fff;text-decoration:none;padding:0.6rem 1.2rem;font-family:'Oswald',sans-serif;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.08em;">f Suiv Facebook</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PUBLICITE MODAL -->
+<div class="modal-overlay" id="pub-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:680px;">
+    <div class="modal-header">
+      <div><div class="modal-tag" style="color:var(--red);">📢 Espas Piblisite</div><div class="modal-title">Anonse Biznis ou sou PEJAM TV</div></div>
+      <button class="modal-close" onclick="document.getElementById('pub-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--gray);font-size:0.88rem;line-height:1.7;margin-bottom:1.5rem;">Jwenn plis kliyan pou biznis ou grâce ak PEJAM TV — platfòm nouvèl Ayisyen ki gen plis lektè chak jou.</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:#f8f8f8;border:2px solid var(--border);padding:1.2rem;">
+          <div style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--white);margin-bottom:0.3rem;">🖼️ Bannè</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;color:var(--red);">1,000g</div>
+          <div style="font-size:0.72rem;color:var(--gray);margin-bottom:1rem;">pa semèn · 3,000g/mwa</div>
+          <button onclick="selectPub('Bannè','1,000g/semèn · 3,000g/mwa')" style="width:100%;margin-top:1rem;background:var(--border);color:var(--white);border:none;padding:0.6rem;font-family:'Oswald',sans-serif;font-size:0.82rem;text-transform:uppercase;cursor:pointer;letter-spacing:0.08em;">Chwazi →</button>
+        </div>
+        <div style="background:#fff7ed;border:2px solid var(--red);padding:1.2rem;position:relative;">
+          <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--red);color:#fff;font-family:'Oswald',sans-serif;font-size:0.6rem;padding:0.15rem 0.6rem;text-transform:uppercase;white-space:nowrap;">Pi Popilè ⭐</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--white);margin-bottom:0.3rem;">🎬 Bannè + Videyo</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;color:var(--red);">2,500g</div>
+          <div style="font-size:0.72rem;color:var(--gray);margin-bottom:1rem;">pa semèn · 8,000g/mwa</div>
+          <button onclick="selectPub('Bannè + Videyo','2,500g/semèn · 8,000g/mwa')" style="width:100%;margin-top:1rem;background:var(--red);color:#fff;border:none;padding:0.6rem;font-family:'Oswald',sans-serif;font-size:0.82rem;text-transform:uppercase;cursor:pointer;letter-spacing:0.08em;">Chwazi →</button>
+        </div>
+        <div style="background:#f8f8f8;border:2px solid #ea580c;padding:1.2rem;">
+          <div style="font-family:'Oswald',sans-serif;font-size:1rem;font-weight:600;color:var(--white);margin-bottom:0.3rem;">🏆 Pakè Konplè</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;color:#ea580c;">5,000g</div>
+          <div style="font-size:0.72rem;color:var(--gray);margin-bottom:1rem;">pa semèn · 15,000g/mwa</div>
+          <button onclick="selectPub('Pakè Konplè','5,000g/semèn · 15,000g/mwa')" style="width:100%;margin-top:1rem;background:#ea580c;color:#fff;border:none;padding:0.6rem;font-family:'Oswald',sans-serif;font-size:0.82rem;text-transform:uppercase;cursor:pointer;letter-spacing:0.08em;">Chwazi →</button>
+        </div>
+      </div>
+      <div id="pub-form" style="display:none;background:#f8f8f8;border:1px solid var(--border);padding:1.2rem;">
+        <div style="font-family:'Oswald',sans-serif;font-size:0.9rem;color:var(--red);margin-bottom:1rem;">📋 Enfòmasyon Biznis ou — <span id="pub-selected-plan"></span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.8rem;">
+          <div class="form-field" style="margin:0;"><label>Non Biznis *</label><input id="pub-biznis" type="text" placeholder="ex: Restoran Lakay"/></div>
+          <div class="form-field" style="margin:0;"><label>Non Kontakte *</label><input id="pub-nom" type="text" placeholder="Non ou..."/></div>
+          <div class="form-field" style="margin:0;"><label>Telefòn *</label><input id="pub-tel" type="tel" placeholder="ex: 3691-1132"/></div>
+          <div class="form-field" style="margin:0;"><label>Rezo Sosyal / Sit</label><input id="pub-site" type="text" placeholder="Facebook, Instagram..."/></div>
+        </div>
+        <div class="form-field"><label>Deskripsyon Biznis ou (opsyonèl)</label><textarea id="pub-desc" rows="2" placeholder="Kisa biznis ou vann oswa ofri..."></textarea></div>
+        <div id="pub-error" style="color:var(--red);font-size:0.8rem;display:none;margin-bottom:0.8rem;">⚠️ Tanpri ranpli non biznis, non kontakte ak telefòn.</div>
+        <button onclick="sendPubWhatsApp()" style="width:100%;background:#25d366;color:#000;border:none;padding:0.85rem;font-family:'Oswald',sans-serif;font-size:0.9rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-weight:700;">📱 Voye Demand sou WhatsApp →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IOS HINT -->
+<div id="ios-hint" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a1a;border-top:3px solid var(--red);padding:1rem 1.5rem;z-index:300;text-align:center;">
+  <div style="font-family:'Oswald',sans-serif;font-size:0.9rem;color:#fff;margin-bottom:0.4rem;">📲 Enstale PEJAM TV sou iPhone ou</div>
+  <div style="font-size:0.8rem;color:#aaa;line-height:1.6;">Klike sou <strong style="color:#fff;">⬆️ Pataje</strong> anba a, epi chwazi <strong style="color:#fff;">"Ajoute sou Ekran Akèy"</strong></div>
+  <button onclick="document.getElementById('ios-hint').style.display='none'" style="margin-top:0.8rem;background:none;border:1px solid #444;color:#888;padding:0.4rem 1rem;font-family:'Oswald',sans-serif;font-size:0.8rem;cursor:pointer;">Fèmen</button>
+</div>
+
+<!-- ADMIN BADGE -->
+<div class="admin-badge" id="admin-badge">🛡️ Admin konekte<button onclick="logout()">✕ Dekonekte</button></div>
+<button class="add-article-btn" id="add-btn" onclick="openEditor()">➕ Ajoute Atik</button>
+
+<!-- PAYMENT MODAL -->
+<div class="modal-overlay" id="payment-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <div><div class="modal-tag">⭐ Abònman Premium</div><div class="modal-title">Chwazi Plan ou</div></div>
+      <button class="modal-close" onclick="document.getElementById('payment-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-family:'Oswald',sans-serif;font-size:0.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem;">Etap 1 — Chwazi Plan</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;margin-bottom:1.5rem;">
+        <div class="plan-card" onclick="selectPlan(this,'1 Mwa','300 goud')">
+          <div style="font-family:'Oswald',sans-serif;font-size:0.7rem;color:var(--gray);text-transform:uppercase;margin-bottom:0.3rem;">1 Mwa</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;">300</div>
+          <div style="font-size:0.65rem;color:var(--gray);">goud</div>
+        </div>
+        <div class="plan-card selected" onclick="selectPlan(this,'3 Mwa','800 goud')">
+          <div style="font-family:'Oswald',sans-serif;font-size:0.65rem;background:var(--red);color:#fff;padding:0.1rem 0.4rem;margin:-0.8rem -0.8rem 0.5rem;text-transform:uppercase;">Pi Popilè</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:0.7rem;color:var(--red);text-transform:uppercase;margin-bottom:0.3rem;">3 Mwa</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;">800</div>
+          <div style="font-size:0.65rem;color:green;">goud · rabè 100g</div>
+        </div>
+        <div class="plan-card" onclick="selectPlan(this,'1 An','2800 goud')">
+          <div style="font-family:'Oswald',sans-serif;font-size:0.7rem;color:var(--gold);text-transform:uppercase;margin-bottom:0.3rem;">1 An 🏆</div>
+          <div style="font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;">2800</div>
+          <div style="font-size:0.65rem;color:var(--gold);">goud · pi bon valè</div>
+        </div>
+      </div>
+      <div style="font-family:'Oswald',sans-serif;font-size:0.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem;">Etap 2 — Enfòmasyon ou</div>
+      <div class="form-field"><label>Non Konplè *</label><input id="pay-name" type="text" placeholder="Non ak Prenon ou..."/></div>
+      <div class="form-field"><label>Nimewo Telefòn *</label><input id="pay-phone" type="tel" placeholder="ex: 3691-1132"/></div>
+      <div class="form-field"><label>Imel (opsyonèl)</label><input id="pay-email" type="email" placeholder="imel@example.com"/></div>
+      <div style="font-family:'Oswald',sans-serif;font-size:0.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.8rem;">Etap 3 — Voye Peman</div>
+      <div style="background:#fdf2f8;border-left:4px solid #e91e8c;padding:1rem;margin-bottom:0.8rem;display:flex;gap:1rem;align-items:center;">
+        <span style="font-size:2rem;">💳</span>
+        <div><div style="font-family:'Oswald',sans-serif;font-size:1rem;color:#e91e8c;">MonCash — <strong>3691-1132</strong></div><div style="font-size:0.78rem;color:var(--gray);">Voye montan plan ou chwazi a sou nimewo sa a</div></div>
+      </div>
+      <div style="background:#f0fdf4;border-left:4px solid #16a34a;padding:1rem;margin-bottom:1.2rem;display:flex;gap:1rem;align-items:center;">
+        <span style="font-size:2rem;">💚</span>
+        <div><div style="font-family:'Oswald',sans-serif;font-size:1rem;color:#16a34a;">NatCash — <strong>5656-5623</strong></div><div style="font-size:0.78rem;color:var(--gray);">Voye montan plan ou chwazi a sou nimewo sa a</div></div>
+      </div>
+      <div id="pay-error" style="color:var(--red);font-size:0.82rem;display:none;margin-bottom:0.8rem;">⚠️ Tanpri ranpli non ak nimewo telefòn ou.</div>
+      <button onclick="sendToWhatsApp()" style="width:100%;background:#25d366;color:#000;border:none;padding:0.9rem;font-family:'Oswald',sans-serif;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;font-weight:700;">📱 Konfime & Voye sou WhatsApp →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACCESS MODAL -->
+<div class="modal-overlay" id="access-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <div><div class="modal-tag" style="color:#16a34a;">🔑 Aksè Premium</div><div class="modal-title">Antre Kòd Aksè ou</div></div>
+      <button class="modal-close" onclick="document.getElementById('access-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:1.5rem;">Si ou deja abòne epi ou resevwa yon kòd aksè sou WhatsApp, antre li anba a.</p>
+      <div class="form-field">
+        <label>Kòd Aksè</label>
+        <input id="access-code" type="text" placeholder="ex: PEJAM-2026-XXXX" style="text-transform:uppercase;letter-spacing:0.15em;font-family:'Oswald',sans-serif;font-size:1.1rem;text-align:center;" onkeydown="if(event.key==='Enter')checkAccessCode()"/>
+      </div>
+      <div id="access-error" style="color:var(--red);font-size:0.82rem;display:none;margin-bottom:0.8rem;text-align:center;">❌ Kòd sa a pa valid. Verifye epi eseye ankò.</div>
+      <div id="access-success" style="display:none;" class="access-box">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">🎉</div>
+        <div style="font-family:'Oswald',sans-serif;font-size:1.1rem;color:#16a34a;margin-bottom:0.3rem;">Byenveni, Abòne Premium!</div>
+        <div style="font-size:0.85rem;color:var(--gray);">Ou kounye a gen aksè konplè a tout kontni PEJAM TV.</div>
+      </div>
+      <button onclick="checkAccessCode()" style="width:100%;background:var(--red);color:#fff;border:none;padding:0.85rem;font-family:'Oswald',sans-serif;font-size:0.95rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;margin-top:0.5rem;">Verifye Kòd →</button>
+      <p style="text-align:center;font-size:0.8rem;color:var(--gray);margin-top:1rem;">Pa gen kòd? <a href="#" onclick="document.getElementById('access-modal').classList.remove('open');document.getElementById('payment-modal').classList.add('open')" style="color:var(--red);text-decoration:none;">Abòne kounye a →</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="login-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:420px;">
+    <div class="modal-header">
+      <div><div class="modal-tag" style="color:var(--gold);">🔐 Aksè Rezève</div><div class="modal-title">Koneksyon Admin</div></div>
+      <button class="modal-close" onclick="document.getElementById('login-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:1.5rem;">Seksyon sa a rezève pou administratè PEJAM TV sèlman.</p>
+      <div class="form-field"><label>Non Itilizatè</label><input id="l-user" type="text" placeholder="admin" autocomplete="off"/></div>
+      <div class="form-field"><label>Modpas</label><input id="l-pass" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+      <div id="l-error" style="color:var(--red);font-size:0.82rem;display:none;text-align:center;margin-bottom:0.8rem;">❌ Non oswa modpas mal. Eseye ankò.</div>
+      <button onclick="doLogin()" style="width:100%;background:var(--red);color:#fff;border:none;padding:0.9rem;font-family:'Oswald',sans-serif;font-size:1rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-weight:700;">Konekte →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN CODES MODAL -->
+<div class="modal-overlay" id="codes-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:520px;">
+    <div class="modal-header">
+      <div><div class="modal-tag">🛡️ Panèl Admin</div><div class="modal-title">Jere Kòd Aksè</div></div>
+      <button class="modal-close" onclick="document.getElementById('codes-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="color:var(--gray);font-size:0.85rem;margin-bottom:1.2rem;">Jenere yon kòd aksè pou chak abòne ki fin peye.</p>
+      <div style="display:flex;gap:0.8rem;margin-bottom:1.2rem;">
+        <input id="new-code-name" type="text" placeholder="Non abòne a..." style="flex:1;background:#f8f8f8;border:1px solid var(--border);padding:0.7rem;font-family:'Source Serif 4',serif;font-size:0.9rem;outline:none;color:#1a1a1a;"/>
+        <button onclick="generateCode()" style="background:var(--red);color:#fff;border:none;padding:0.7rem 1.2rem;font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;white-space:nowrap;">+ Jenere Kòd</button>
+      </div>
+      <div id="codes-list" style="display:flex;flex-direction:column;gap:0.6rem;max-height:350px;overflow-y:auto;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDITOR MODAL -->
+<div class="modal-overlay" id="editor-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:620px;">
+    <div class="modal-header">
+      <div><div class="modal-tag">✏️ Panèl Admin</div><div class="modal-title" id="editor-modal-title">Nouvo Atik</div></div>
+      <button class="modal-close" onclick="document.getElementById('editor-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-field"><label>Kategori</label>
+        <select id="ed-tag"><option>Ayiti — Aktyalite</option><option>Ekonomi</option><option>Dyaspora</option><option>Espò</option><option>Sante</option><option>Enèji</option><option>Edikasyon</option><option>Kiltirèl</option><option>Mondyal</option><option>Biznis</option></select>
+      </div>
+      <div class="form-field"><label>Tit Atik la *</label><input id="ed-title" type="text" placeholder="Ekri tit atik la..."/></div>
+      <div class="form-field"><label>Rezime Kout *</label><textarea id="ed-excerpt" rows="3" placeholder="Rezime kout pou atik la..."></textarea></div>
+      <div class="form-field"><label>Kontni Konplè</label><textarea id="ed-content" rows="5" placeholder="Kontni konplè atik la..."></textarea></div>
+      <div style="display:flex;gap:1rem;align-items:flex-end;">
+        <div class="form-field" style="flex:1;margin-bottom:0;"><label>Otè</label><input id="ed-author" type="text" placeholder="Non otè a..."/></div>
+        <label style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;cursor:pointer;font-family:'Oswald',sans-serif;font-size:0.8rem;color:var(--red);">
+          <input type="checkbox" id="ed-premium" style="accent-color:var(--red);width:16px;height:16px;"/> Premium ⭐
+        </label>
+      </div>
+      <div id="ed-error" style="color:var(--red);font-size:0.8rem;display:none;margin-top:0.8rem;">⚠️ Tanpri ranpli tit ak rezime a.</div>
+      <input type="hidden" id="ed-edit-index" value="-1"/>
+      <div style="display:flex;gap:0.8rem;margin-top:1.2rem;">
+        <button onclick="submitArticle()" style="flex:1;background:var(--red);color:#fff;border:none;padding:0.9rem;font-family:'Oswald',sans-serif;font-size:0.95rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;font-weight:600;" id="ed-submit-btn">✅ Pibliye Atik la</button>
+        <button onclick="document.getElementById('editor-modal').classList.remove('open');document.getElementById('codes-modal').classList.add('open')" style="background:#f8f8f8;color:var(--white);border:1px solid var(--border);padding:0.9rem 1.2rem;font-family:'Oswald',sans-serif;font-size:0.85rem;cursor:pointer;">🔑 Kòd Aksè</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ARTICLE MODAL -->
+<div class="modal-overlay" id="article-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-header">
+      <div><div class="modal-tag" id="modal-tag"></div><div class="modal-title" id="modal-title"></div></div>
+      <button class="modal-close" onclick="document.getElementById('article-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta" id="modal-meta"></div>
+      <div class="modal-content" id="modal-content"></div>
+      <!-- Admin edit/delete buttons inside article -->
+      <div id="modal-admin-actions" style="display:none;margin-top:1.5rem;display:flex;gap:0.8rem;flex-wrap:wrap;">
+        <button id="modal-edit-btn" style="background:#f97316;color:#fff;border:none;padding:0.6rem 1.2rem;font-family:'Oswald',sans-serif;font-size:0.85rem;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;">✏️ Modifye</button>
+        <button id="modal-delete-btn" style="background:#dc2626;color:#fff;border:none;padding:0.6rem 1.2rem;font-family:'Oswald',sans-serif;font-size:0.85rem;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em;">🗑️ Efase</button>
+      </div>
+      <div id="modal-premium" style="display:none;background:#fff7ed;border:1px solid var(--red);padding:1.5rem;margin-top:1.5rem;text-align:center;">
+        <h4 style="font-family:'Oswald',sans-serif;color:var(--red);font-size:1.2rem;margin-bottom:0.5rem;">⭐ Kontni Eksklizyf Premium</h4>
+        <p style="color:var(--gray);font-size:0.85rem;margin-bottom:1rem;">Abòne pou li atik konplè a.</p>
+        <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
+          <button onclick="document.getElementById('article-modal').classList.remove('open');document.getElementById('payment-modal').classList.add('open')" style="background:var(--red);color:#fff;border:none;padding:0.7rem 1.5rem;font-family:'Oswald',sans-serif;font-weight:700;cursor:pointer;font-size:0.9rem;">Abòne kounye a →</button>
+          <button onclick="document.getElementById('article-modal').classList.remove('open');openAccessModal()" style="background:#f8f8f8;color:var(--white);border:1px solid var(--border);padding:0.7rem 1.2rem;font-family:'Oswald',sans-serif;cursor:pointer;font-size:0.9rem;">🔑 Antre Kòd Aksè</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  // Expose functions to global window so HTML onclick handlers work
+  // ══════════════════════════════════════════
+  //  FIREBASE IMPORTS
+  // ══════════════════════════════════════════
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, orderBy, query } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDKjM9QtNlyp3y5s8aQhdDb85Afxy3ft0I",
+    authDomain: "pejamtv.firebaseapp.com",
+    projectId: "pejamtv",
+    storageBucket: "pejamtv.firebasestorage.app",
+    messagingSenderId: "958240325710",
+    appId: "1:958240325710:web:49cd3f2d983c055cdf431f"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getFirestore(app);
+
+  // ══════════════════════════════════════════
+  //  CONSTANTS
+  // ══════════════════════════════════════════
+  const ADMIN_USER = 'pejamtv';
+  const ADMIN_PASS = 'redaksyon2026';
+
+  const tagEmojis = {
+    'Ayiti — Aktyalite':'🇭🇹','Ekonomi':'💰','Dyaspora':'✈️',
+    'Espò':'⚽','Sante':'🏥','Enèji':'⚡','Edikasyon':'🎓',
+    'Kiltirèl':'🎵','Mondyal':'🌍','Biznis':'💼'
+  };
+
+  // ══════════════════════════════════════════
+  //  STATE
+  // ══════════════════════════════════════════
+  let isAdmin   = false;
+  let isPremium = false;
+  let selectedPlan = '3 Mwa — 800 goud';
+  let currentArticleIndex = -1;
+
+  // Atik debaz toujou la (pa sove nan Firebase)
+  const BASE_ARTICLES = [
+    {tag:"Ayiti — Aktyalite",title:"Gouvènman an anonse yon nouvo plan pou rekonstriksyon kominote ki afekte yo nan sid peyi a",meta:"Par Rédaction PEJAM TV · 20 Avril 2026 · 5 min li",content:"Gouvènman ayisyen an anonse yon plan konplè pou rekonstriksyon kominote ki te soufri nan sid peyi a. Plan sa a gen ladan konstwiksyon kay, wout, ak enfrastrikti debaz pou popilasyon an.",premium:true,base:true},
+    {tag:"Ekonomi",title:"Taux de change : Goud la rive nan 132 pou 1 dola ameriken",meta:"Par Jean-Marc Pierre · 20 Avril 2026 · 3 min li",content:"Goud ayisyen an kontinye soufri fas ak dola ameriken. Selon Bank Santral Ayiti (BRH), echanj ofisyèl la rive nan 132 goud pou yon dola.",premium:true,base:true},
+    {tag:"Dyaspora",title:"Miami : Gwo rasanbleman kominote Ayisyen pou soutni peyi a",meta:"Par Marie Céleste · 20 Avril 2026 · 4 min li",content:"Plis pase 5,000 moun Ayisyen nan dyaspora Miami te rasanble nan yon gwo evènman solidarite ak Ayiti. Evènman an te rekòlte plis pase 200,000 dola.",premium:false,base:true},
+    {tag:"Espò",title:"Seleksyon nasyonal : Coaches yo anonse ekip pou match prochain",meta:"Par Sports PEJAM TV · 20 Avril 2026 · 2 min li",content:"Fédération Haïtienne de Football (FHF) pibliye lis jwe yo ki pral reprezante Grenadiers yo.",premium:false,base:true},
+    {tag:"Sante",title:"Nouvo lopital ap ouvri nan Atibon — 200 kabann disponib pou malad",meta:"Par Rédaction Sante · 20 Avril 2026 · 3 min li",content:"Yon nouvo lopital modèn ap ouvri portes li nan Atibon-Jacmel. Etablisman sa a gen 200 kabann, yon sèvis ijans, ak ekipman medikal dènye kri.",premium:true,base:true},
+    {tag:"Enèji",title:"ED'H anonse nouvo orè kouran pou Pòtoprens semèn k ap vini an",meta:"Par Tech & Enèji · 20 Avril 2026 · 2 min li",content:"Elektriste d'Haïti (ED'H) pibliye yon nouvo orè distribisyon elektrisite pou kapital la.",premium:false,base:true},
+    {tag:"Edikasyon",title:"Rezilta BAC 2026 : 68% elèv pase egzamen — yon rekò istorik",meta:"Par Edikasyon PEJAM TV · 19 Avril 2026 · 4 min li",content:"Rezilta egzamen baccalauréat 2026 bay yon bon nouvèl pou Ayiti. Pousantaj reyisit la rive nan 68%, sa ki pi wo depi 10 ane.",premium:true,base:true}
+  ];
+
+  // ══════════════════════════════════════════
+  //  FIREBASE — LI & EKRI ATIK
+  // ══════════════════════════════════════════
+  let articles = [...BASE_ARTICLES];
+  let accessCodes = {};
+
+  async function loadArticlesFromFirebase() {
+    try {
+      showToast('⏳ Chajman atik yo...', '#888');
+      const q = query(collection(db, 'articles'), orderBy('timestamp', 'desc'));
+      const snap = await getDocs(q);
+      const firebaseArticles = [];
+      snap.forEach(d => firebaseArticles.push({...d.data(), id: d.id, base: false}));
+      articles = [...firebaseArticles, ...BASE_ARTICLES];
+      rebuildGrid();
+      showToast('✅ Atik yo chaje!', '#16a34a');
+    } catch(e) {
+      console.error(e);
+      showToast('⚠️ Erè koneksyon Firebase', '#f97316');
+    }
+  }
+
+  async function saveArticleToFirebase(articleData) {
+    const ref = await addDoc(collection(db, 'articles'), {
+      ...articleData,
+      timestamp: Date.now()
+    });
+    return ref.id;
+  }
+
+  async function updateArticleInFirebase(id, data) {
+    await updateDoc(doc(db, 'articles', id), data);
+  }
+
+  async function deleteArticleFromFirebase(id) {
+    await deleteDoc(doc(db, 'articles', id));
+  }
+
+  async function loadCodesFromFirebase() {
+    try {
+      const snap = await getDocs(collection(db, 'codes'));
+      snap.forEach(d => { accessCodes[d.id] = d.data(); });
+      renderCodesList();
+    } catch(e) { console.error(e); }
+  }
+
+  async function saveCodeToFirebase(code, info) {
+    await addDoc(collection(db, 'codes'), {code, ...info});
+  }
+
+  // Kreye yon kat nouvèl
+  function createNewsCard(articleIndex) {
+    const a = articles[articleIndex];
+    const card = document.createElement('div');
+    card.className = 'news-card';
+    card.dataset.index = articleIndex;
+    card.innerHTML = `
+      <div class="news-card-img">${tagEmojis[a.tag]||'📰'}</div>
+      <div class="news-card-body">
+        <div class="news-card-tag">${a.tag}</div>
+        <div class="news-card-title">${a.title}</div>
+        <div class="news-card-excerpt">${a.excerpt||a.content.substring(0,100)+'...'}</div>
+        <div class="news-card-meta"><span>${a.tag}</span><span>${a.date||'Kounye a ✨'}</span></div>
+      </div>`;
+    card.onclick = () => openArticle(articleIndex);
+    return card;
+  }
+
+  // Rann atik admin yo nan griy la (yon sèl fwa lè paj louvri)
+  function renderSavedArticles() {
+    const grid = document.getElementById('news-grid');
+    // Atik admin yo = indices 0..N-1, atik debaz = apre yo
+    const adminCount = articles.filter(a => !a.base).length;
+    for (let i = adminCount - 1; i >= 0; i--) {
+      grid.prepend(createNewsCard(i));
+    }
+  }
+
+  // Rebuild griy konplètman apre chanjman
+  function rebuildGrid() {
+    const grid = document.getElementById('news-grid');
+    // Efase sèlman kat admin (gen data-index)
+    grid.querySelectorAll('.news-card[data-index]').forEach(c => c.remove());
+    const adminCount = articles.filter(a => !a.base).length;
+    for (let i = adminCount - 1; i >= 0; i--) {
+      grid.prepend(createNewsCard(i));
+    }
+    // Mete a jou onclick pou kat debaz tou (pa gen data-index)
+    const baseCards = grid.querySelectorAll('.news-card:not([data-index])');
+    baseCards.forEach((card, i) => {
+      card.onclick = () => openArticle(adminCount + i);
+    });
+  }
+
+  // Kouri lè paj la louvri
+  window.addEventListener('load', () => {
+    loadArticlesFromFirebase();
+    loadCodesFromFirebase();
+  });
+
+  // ══════════════════════════════════════════
+  //  PLAN & PAYMENT
+  // ══════════════════════════════════════════
+  function selectPlan(el, name, price) {
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPlan = name + ' — ' + price;
+  }
+
+  function sendToWhatsApp() {
+    const name  = document.getElementById('pay-name').value.trim();
+    const phone = document.getElementById('pay-phone').value.trim();
+    const email = document.getElementById('pay-email').value.trim();
+    const err   = document.getElementById('pay-error');
+    if (!name || !phone) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    const msg = `⭐ *Nouvo Demand Abònman PEJAM TV Premium*\n\n👤 Non: ${name}\n📞 Telefòn: ${phone}${email ? '\n📧 Imel: '+email : ''}\n📦 Plan: ${selectedPlan}\n\n✅ Mwen fin voye peman mwen an. Tanpri verifye epi voye kòd aksè mwen an.`;
+    window.open('https://wa.me/50956565623?text=' + encodeURIComponent(msg), '_blank');
+    document.getElementById('payment-modal').classList.remove('open');
+    showToast('✅ Mesaj voye! Nou pral kontakte ou anvan 24 èdtan.', '#16a34a');
+  }
+
+  // ══════════════════════════════════════════
+  //  PUBLICITE
+  // ══════════════════════════════════════════
+  function selectPub(plan, price) {
+    document.getElementById('pub-selected-plan').textContent = plan + ' — ' + price;
+    document.getElementById('pub-form').style.display = 'block';
+  }
+
+  function sendPubWhatsApp() {
+    const biznis = document.getElementById('pub-biznis').value.trim();
+    const nom    = document.getElementById('pub-nom').value.trim();
+    const tel    = document.getElementById('pub-tel').value.trim();
+    const site   = document.getElementById('pub-site').value.trim();
+    const desc   = document.getElementById('pub-desc').value.trim();
+    const plan   = document.getElementById('pub-selected-plan').textContent;
+    const err    = document.getElementById('pub-error');
+    if (!biznis || !nom || !tel) { err.style.display = 'block'; return; }
+    err.style.display = 'none';
+    const msg = `📢 *Demand Piblisite PEJAM TV*\n\n🏢 Biznis: ${biznis}\n👤 Kontakte: ${nom}\n📞 Telefòn: ${tel}${site ? '\n🌐 Sit/Rezo: '+site : ''}${desc ? '\n📝 Deskripsyon: '+desc : ''}\n📦 Plan: ${plan}`;
+    window.open('https://wa.me/50956565623?text=' + encodeURIComponent(msg), '_blank');
+    document.getElementById('pub-modal').classList.remove('open');
+    showToast('✅ Demand voye! Nou pral kontakte ou.', '#16a34a');
+  }
+
+  // ══════════════════════════════════════════
+  //  ACCESS CODE
+  // ══════════════════════════════════════════
+  function openAccessModal() {
+    document.getElementById('access-error').style.display = 'none';
+    document.getElementById('access-success').style.display = 'none';
+    document.getElementById('access-code').value = '';
+    document.getElementById('access-modal').classList.add('open');
+  }
+
+  function checkAccessCode() {
+    const code = document.getElementById('access-code').value.trim().toUpperCase();
+    const err  = document.getElementById('access-error');
+    const ok   = document.getElementById('access-success');
+    if (accessCodes[code]) {
+      isPremium = true;
+      accessCodes[code].used = true;
+      saveCodes();
+      err.style.display = 'none';
+      ok.style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('access-modal').classList.remove('open');
+        showToast('🎉 Ou kounye a gen aksè Premium!', '#16a34a');
+      }, 2000);
+    } else {
+      err.style.display = 'block';
+      ok.style.display = 'none';
+    }
+  }
+
+  // ══════════════════════════════════════════
+  //  GENERATE CODE (admin)
+  // ══════════════════════════════════════════
+  function generateCode() {
+    const name = document.getElementById('new-code-name').value.trim();
+    if (!name) { showToast('⚠️ Antre non abòne a.', '#f97316'); return; }
+    const rand = Math.random().toString(36).substring(2,6).toUpperCase();
+    const code = 'PEJAM-' + new Date().getFullYear() + '-' + rand;
+    accessCodes[code] = { name, plan: selectedPlan, date: new Date().toLocaleDateString('fr-HT'), used: false };
+    saveCodes(); // 💾 Sove nan localStorage
+    document.getElementById('new-code-name').value = '';
+    renderCodesList();
+    const msg = `🔑 *Kòd Aksè Premium PEJAM TV*\n\nBonjou ${name}!\n\nMèsi pou abònman ou. Men kòd aksè ou:\n\n*${code}*\n\nAntre kòd sa a sou sit PEJAM TV → bouton "⭐ Aksè Premium".\n\nMèsi! 🙏`;
+    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  function renderCodesList() {
+    const list = document.getElementById('codes-list');
+    const codes = Object.entries(accessCodes);
+    if (codes.length === 0) {
+      list.innerHTML = '<div style="text-align:center;color:var(--gray);font-size:0.85rem;padding:2rem;">Pa gen kòd aktif kounye a.</div>';
+      return;
+    }
+    list.innerHTML = codes.map(([code, info]) => `
+      <div style="background:#f8f8f8;border:1px solid var(--border);padding:0.8rem;display:flex;justify-content:space-between;align-items:center;gap:0.5rem;">
+        <div>
+          <div style="font-family:'Oswald',sans-serif;font-size:0.9rem;letter-spacing:0.1em;color:var(--red);">${code}</div>
+          <div style="font-size:0.78rem;color:var(--gray);">${info.name} · ${info.date} · ${info.used ? '✅ Itilize' : '⏳ Pa itilize'}</div>
+        </div>
+        <div style="display:flex;gap:0.4rem;">
+          <button onclick="copyCode('${code}')" style="background:var(--card);border:1px solid var(--border);padding:0.3rem 0.7rem;font-family:'Oswald',sans-serif;font-size:0.75rem;cursor:pointer;color:var(--white);">Kopye</button>
+          <button onclick="deleteCode('${code}')" style="background:#fee2e2;border:1px solid #fca5a5;padding:0.3rem 0.5rem;font-size:0.75rem;cursor:pointer;color:#dc2626;">✕</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function copyCode(code) {
+    navigator.clipboard.writeText(code).then(() => showToast('✅ Kòd kopye: ' + code, '#16a34a'));
+  }
+
+  function deleteCode(code) {
+    if (!confirm('Efase kòd ' + code + '?')) return;
+    delete accessCodes[code];
+    renderCodesList();
+    showToast('🗑️ Kòd efase.', '#888');
+  }
+
+  // ══════════════════════════════════════════
+  //  AUTH
+  // ══════════════════════════════════════════
+  function handleAdminBtn() {
+    if (isAdmin) logout();
+    else document.getElementById('login-modal').classList.add('open');
+  }
+
+  function doLogin() {
+    const u = document.getElementById('l-user').value.trim();
+    const p = document.getElementById('l-pass').value;
+    const err = document.getElementById('l-error');
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      isAdmin = true;
+      document.getElementById('login-modal').classList.remove('open');
+      document.getElementById('l-user').value = '';
+      document.getElementById('l-pass').value = '';
+      err.style.display = 'none';
+      document.getElementById('nav-admin-btn').textContent = '🛡️ Admin';
+      document.getElementById('nav-admin-btn').classList.add('logged');
+      document.getElementById('admin-badge').classList.add('show');
+      document.getElementById('add-btn').classList.add('show');
+      showToast('✅ Byenveni, Admin!', '#16a34a');
+    } else {
+      err.style.display = 'block';
+      document.getElementById('l-pass').value = '';
+    }
+  }
+
+  function logout() {
+    isAdmin = false;
+    document.getElementById('nav-admin-btn').textContent = '🔐 Admin';
+    document.getElementById('nav-admin-btn').classList.remove('logged');
+    document.getElementById('admin-badge').classList.remove('show');
+    document.getElementById('add-btn').classList.remove('show');
+    showToast('👋 Ou dekonekte.', '#888');
+  }
+
+  // ══════════════════════════════════════════
+  //  EDITOR — Ajoute / Modifye Atik
+  // ══════════════════════════════════════════
+  function openEditor(editIndex = -1) {
+    if (!isAdmin) { document.getElementById('login-modal').classList.add('open'); return; }
+    document.getElementById('ed-edit-index').value = editIndex;
+    if (editIndex >= 0) {
+      const a = articles[editIndex];
+      document.getElementById('editor-modal-title').textContent = 'Modifye Atik';
+      document.getElementById('ed-submit-btn').textContent = '✅ Mete Ajou';
+      document.getElementById('ed-tag').value    = a.tag;
+      document.getElementById('ed-title').value  = a.title;
+      document.getElementById('ed-excerpt').value = a.excerpt || '';
+      document.getElementById('ed-content').value = a.content;
+      document.getElementById('ed-author').value  = (a.meta||'').split('Par ')[1]?.split(' ·')[0] || '';
+      document.getElementById('ed-premium').checked = a.premium;
+    } else {
+      document.getElementById('editor-modal-title').textContent = 'Nouvo Atik';
+      document.getElementById('ed-submit-btn').textContent = '✅ Pibliye Atik la';
+      ['ed-title','ed-excerpt','ed-content','ed-author'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('ed-premium').checked = false;
+    }
+    document.getElementById('ed-error').style.display = 'none';
+    document.getElementById('editor-modal').classList.add('open');
+  }
+
+  async function submitArticle() {
+    const title   = document.getElementById('ed-title').value.trim();
+    const excerpt = document.getElementById('ed-excerpt').value.trim();
+    const tag     = document.getElementById('ed-tag').value;
+    const content = document.getElementById('ed-content').value.trim();
+    const author  = document.getElementById('ed-author').value.trim() || 'Rédaction PEJAM TV';
+    const premium = document.getElementById('ed-premium').checked;
+    const editIdx = parseInt(document.getElementById('ed-edit-index').value);
+
+    if (!title || !excerpt) { document.getElementById('ed-error').style.display='block'; return; }
+    document.getElementById('ed-error').style.display='none';
+
+    const now = new Date();
+    const months = ['Janvye','Fevriye','Mas','Avril','Me','Jen','Jiyè','Out','Septanm','Oktòb','Novanm','Desanm'];
+    const dateStr = `${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+    const meta = `Par ${author} · ${dateStr} · 2 min li`;
+
+    document.getElementById('ed-submit-btn').textContent = '⏳ Ap sove...';
+    document.getElementById('ed-submit-btn').disabled = true;
+
+    try {
+      if (editIdx >= 0 && articles[editIdx]?.id) {
+        // MODIFYE — mete ajou nan Firebase
+        const id = articles[editIdx].id;
+        await updateArticleInFirebase(id, {tag, title, excerpt, content, meta, premium, date: dateStr});
+        showToast('✅ Atik mete ajou!', '#16a34a');
+      } else {
+        // NOUVO — sove nan Firebase
+        await saveArticleToFirebase({tag, title, excerpt, content, meta, premium, date: dateStr});
+        showToast('✅ Atik pibliye sou entènèt!', '#16a34a');
+      }
+      await loadArticlesFromFirebase();
+    } catch(e) {
+      console.error(e);
+      showToast('❌ Erè sove atik la', '#dc2626');
+    }
+
+    document.getElementById('ed-submit-btn').textContent = '✅ Pibliye Atik la';
+    document.getElementById('ed-submit-btn').disabled = false;
+    document.getElementById('editor-modal').classList.remove('open');
+    document.getElementById('article-modal').classList.remove('open');
+  }
+
+  // ══════════════════════════════════════════
+  //  ARTICLE — Ouvri / Efase
+  // ══════════════════════════════════════════
+  function openArticle(i) {
+    const a = articles[i];
+    if (!a) return;
+    currentArticleIndex = i;
+    document.getElementById('modal-tag').textContent     = a.tag;
+    document.getElementById('modal-title').textContent   = a.title;
+    document.getElementById('modal-meta').textContent    = a.meta;
+    document.getElementById('modal-content').textContent = a.content;
+    document.getElementById('modal-premium').style.display = (a.premium && !isPremium) ? 'block' : 'none';
+
+    // Bouton admin (Modifye / Efase) — parèt sèlman pou atik admin (pa atik debaz)
+    const adminActions = document.getElementById('modal-admin-actions');
+    if (isAdmin && !a.base) {
+      adminActions.style.display = 'flex';
+      document.getElementById('modal-edit-btn').onclick = () => {
+        document.getElementById('article-modal').classList.remove('open');
+        openEditor(currentArticleIndex);
+      };
+      document.getElementById('modal-delete-btn').onclick = () => deleteArticle(currentArticleIndex);
+    } else {
+      adminActions.style.display = 'none';
+    }
+
+    document.getElementById('article-modal').classList.add('open');
+  }
+
+  async function deleteArticle(i) {
+    if (!confirm('Efase atik sa a pou toutan?')) return;
+    try {
+      if (articles[i]?.id) {
+        await deleteArticleFromFirebase(articles[i].id);
+      }
+      await loadArticlesFromFirebase();
+      document.getElementById('article-modal').classList.remove('open');
+      showToast('🗑️ Atik efase.', '#888');
+    } catch(e) {
+      showToast('❌ Erè efase atik la', '#dc2626');
+    }
+  }
+
+  // ══════════════════════════════════════════
+  //  VIDEO
+  // ══════════════════════════════════════════
+  function playVideo(videoId) {
+    showToast('📺 Ajoute lyen YouTube ou nan sit la pou video yo fonksyone!', '#f97316');
+  }
+
+  // ══════════════════════════════════════════
+  //  PWA & INSTALL
+  // ══════════════════════════════════════════
+  (function() {
+    const manifest = {
+      name: "PEJAM TV — Nouvèl Ayiti",
+      short_name: "PEJAM TV",
+      description: "Premye platfòm nouvèl Ayisyen ou ka fè konfyans.",
+      start_url: "/",
+      display: "standalone",
+      orientation: "portrait",
+      background_color: "#f97316",
+      theme_color: "#f97316",
+      icons: [
+        { src: "https://api.dicebear.com/7.x/initials/svg?seed=PT&backgroundColor=f97316&textColor=ffffff&fontSize=40&chars=2", sizes: "192x192", type: "image/svg+xml" },
+        { src: "https://api.dicebear.com/7.x/initials/svg?seed=PT&backgroundColor=f97316&textColor=ffffff&fontSize=40&chars=2", sizes: "512x512", type: "image/svg+xml" }
+      ]
+    };
+    const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+    document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(blob));
+
+    if ('serviceWorker' in navigator) {
+      const swCode = `
+        const CACHE='pejamtv-v1';
+        self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(['/']))));
+        self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).catch(()=>caches.match('/')))));
+      `;
+      const swBlob = new Blob([swCode], {type:'text/javascript'});
+      navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(()=>{});
+    }
+
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('install-banner').style.display = 'flex';
+    });
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('install-banner').style.display = 'none';
+      showToast('✅ PEJAM TV enstale sou telefòn ou!', '#16a34a');
+    });
+    document.getElementById('install-btn').addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        if (outcome === 'accepted') document.getElementById('install-banner').style.display = 'none';
+      }
+    });
+
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.navigator.standalone;
+    if (isIOS) setTimeout(() => document.getElementById('ios-hint').style.display = 'block', 3000);
+  })();
+
+  // ══════════════════════════════════════════
+  //  TOAST
+  // ══════════════════════════════════════════
+  function showToast(msg, color) {
+    const t = document.createElement('div');
+    t.textContent = msg;
+    Object.assign(t.style, {
+      position:'fixed', bottom:'2rem', right:'2rem',
+      background:color, color:'#fff',
+      fontFamily:'Oswald,sans-serif', padding:'0.8rem 1.5rem',
+      zIndex:'999', fontSize:'0.88rem', letterSpacing:'0.05em',
+      boxShadow:'0 4px 20px rgba(0,0,0,0.2)', borderRadius:'2px'
+    });
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+  }
+
+  function subscribeWhatsApp() {
+    const msg = `📧 *Nouvo Abònman Nouvèl PEJAM TV*\n\n✅ Mwen vle abòne pou resevwa nouvèl PEJAM TV chak jou sou WhatsApp mwen an.\n\nMèsi! 🙏`;
+    window.open('https://wa.me/50956565623?text=' + encodeURIComponent(msg), '_blank');
+    showToast('✅ Nou pral ajoute ou nan lis la!', '#16a34a');
+  }
+
+  // ══════════════════════════════════════════
+  //  EXPOSE FONKSYON YO POU HTML ONCLICK
+  // ══════════════════════════════════════════
+  window.subscribeWhatsApp  = subscribeWhatsApp;
+  window.handleAdminBtn   = handleAdminBtn;
+  window.doLogin          = doLogin;
+  window.logout           = logout;
+  window.openEditor       = openEditor;
+  window.submitArticle    = submitArticle;
+  window.openArticle      = openArticle;
+  window.deleteArticle    = deleteArticle;
+  window.openAccessModal  = openAccessModal;
+  window.checkAccessCode  = checkAccessCode;
+  window.generateCode     = generateCode;
+  window.renderCodesList  = renderCodesList;
+  window.copyCode         = copyCode;
+  window.deleteCode       = deleteCode;
+  window.selectPlan       = selectPlan;
+  window.sendToWhatsApp   = sendToWhatsApp;
+  window.selectPub        = selectPub;
+  window.sendPubWhatsApp  = sendPubWhatsApp;
+  window.playVideo        = playVideo;
+</script>
+</body>
+</html>
